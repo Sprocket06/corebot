@@ -13,15 +13,16 @@ let {importCode, sortDeck} = require('../stolenUtils.js')
 function deck(args, msg){
   let embed = new Discord.MessageEmbed()
   let deckData = importCode(args[1]);
-  let deck = deckData.deck;
-  embed.setColor(leadColors[deckData.lead]);
   if(!deck){
-    msg.reply("Sorry, I don't recognize that deck code.")
-  }
-  deck.sort(sortDeck);
-  embed.setTitle(`Imported Deck (${deckData.lead})`)
-  embed.setDescription(deck.map(_=>_.in_deck==1?`(${_.rating}) ${_.name}\n`:`(${_.rating}) ${_.name}\n`.repeat(2)).join(''))
-  msg.channel.send(embed)
+    msg.channel.send("Sorry, I don't recognize that deck code.")
+  }else{
+		let deck = deckData.deck;
+	  embed.setColor(leadColors[deckData.lead]);
+	  deck.sort(sortDeck);
+	  embed.setTitle(`Imported Deck (${deckData.lead})`)
+	  embed.setDescription(deck.map(_=>_.in_deck==1?`(${_.rating}) ${_.name}\n`:`(${_.rating}) ${_.name}\n`.repeat(2)).join(''))
+	  msg.channel.send(embed)
+	}
 }
 
 
