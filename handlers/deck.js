@@ -13,7 +13,8 @@ let {importCode, sortDeck} = require('../stolenUtils.js')
 function deck(args, msg){
   let embed = new Discord.MessageEmbed()
   let deckData = importCode(args[1]);
-  if(!deck){
+	console.log(deckData)
+  if(!deckData){
     msg.channel.send("Sorry, I don't recognize that deck code.")
   }else{
 		let deck = deckData.deck;
