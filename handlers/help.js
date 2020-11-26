@@ -12,3 +12,5 @@ function help(args, msg){
   NOTE: this is *very* slow on current hardware, the bot can and will take upwards of 8 seconds to respond.`
   )
 }
+
+module.exports = help;
