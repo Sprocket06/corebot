@@ -1,0 +1,8 @@
+node_modules/
+All Cards/
+scripts/
+stolenUtils.js
+tokendata.js
+cardImgData.js
+config.json
+*.csv

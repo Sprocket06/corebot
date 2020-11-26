@@ -1,0 +1,17 @@
+{
+  "name": "corebot",
+  "version": "1.0.0",
+  "description": "Fatal Core Discord Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "discord.js": "^12.4.1",
+    "fuse.js": "^6.4.3",
+    "require-dir": "^1.2.0"
+  }
+}
