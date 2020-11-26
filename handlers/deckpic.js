@@ -1,13 +1,15 @@
 const CardImgData = require('../cardImgData.js')
-const NodeCanvas = require('canvas')
+const PureImage = require('pureimage')
+const Stream = require('stream')
 const Discord = require('discord.js')
+const fs = require('fs')
 const {importCode, sortDeck} = require('../stolenUtils.js')
 
 function deckPic(deck){//this function is bad and i don't really care at this point lmao it works
 	return new Promise( (res, rej) =>{
 		let cards = deck.deck;
 		let lead = deck.lead;
-		let canvas = NodeCanvas.createCanvas(1998,1380)
+		let canvas = PureImage.make(1998,1380)
 		let ctx = canvas.getContext('2d')
 		let doneCount = 0;
 	//whoever made loadImage but not a synchronous version can take a piece of rebar through the fuckin skull
@@ -21,7 +23,7 @@ function deckPic(deck){//this function is bad and i don't really care at this po
 	//	console.log(JSON.stringify(card))
 		let data = CardImgData[card.card_id]
 
-		NodeCanvas.loadImage(`./All Cards/${data.leader}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`).then(img=>{
+		PureImage.decodePNGFromStream(fs.createReadStream(`./All Cards/${data.leader}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`)).then(img=>{
 			var c = cards[i]
 		//	console.log('x is'+x)
 			ctx.drawImage(img, Math.floor((x-1) % 6) * 333, Math.floor((x-1)/6) * 460)
@@ -35,7 +37,16 @@ function deckPic(deck){//this function is bad and i don't really care at this po
 			}
 		//	console.log('finished drawing '+data.name)
 			if(++doneCount == 18){
-				res(canvas.toBuffer());
+				/*let writableStream = new Stream.Writable();
+				writableStream._write = (chunk, encoding, next) => {
+  				console.log(chunk.toString())
+  				next()
+				}
+				*/
+				PureImage.encodePNGToStream(ctx.bitmap, fs.createWriteStream('out.png')).then(_=>{
+						res(fs.createReadStream('out.png'));
+				})
+
 			}else{
 			//	console.log(doneCount)
 			}

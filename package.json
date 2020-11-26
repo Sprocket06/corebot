@@ -6,12 +6,13 @@
   "scripts": {
     "test": "node ./index.js"
   },
-  "author": "",
+  "author": "Sprocket",
+  "repository": "https://github.com/Sprocket06/corebot",
   "license": "ISC",
   "dependencies": {
-    "canvas": "^2.6.1",
     "discord.js": "^12.4.1",
     "fuse.js": "^6.4.3",
+    "pureimage": "^0.2.5",
     "require-dir": "^1.2.0"
   }
 }
