@@ -35,7 +35,7 @@ function card(args, msg){
     let data = search.item;
     let embed = new Discord.MessageEmbed()
       .setTitle(`${data.name} (${data.rating})`)
-      .setDescription(`${formatLeadText(data.leader)} ${data.creature?`**${data.power}/${data.hp}**`:`**Spell**`}\n*${data.cardtext}*${data.tokens?`${data.tokens.map(_=>`\n${_.name}: ${_.power}/${_.hp} ${_.cardtext?`*${_.cardtext}*`:''}`)}`:''}`)
+      .setDescription(`${formatLeadText(data.leader)} ${data.creature?`**${data.power}/${data.hp}**`:`**Spell**`}\n${data.cardtext?`*${data.cardtext}*`:''}${data.tokens?`${data.tokens.map(_=>`\n${_.name}: ${_.power}/${_.hp} ${_.cardtext?`*${_.cardtext}*`:''}`)}`:''}`)
       .attachFiles([`./All Cards/${data.leader}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`])
       .setImage(`attachment://FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`);
     msg.channel.send(embed)
