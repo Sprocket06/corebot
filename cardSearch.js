@@ -23,6 +23,18 @@ Object.keys(CardImgData).forEach(_=>{
 	}
 })
 
-let fuse = new Fuse(Object.values(CardImgData), FuseOpts);
+let searchableTokens = []
+Object.values(TokenData).forEach(lead=>{
+	Object.values(lead).forEach(item=>searchableTokens.push(item))
+})
 
-module.exports = fuse;
+let cards = new Fuse(Object.values(CardImgData), FuseOpts);
+let tokens = new Fuse(Object.values(searchableTokens), {
+	threshold: 0.15,
+	includeScore: true,
+	includeMatches: true,
+	minMatchCharLength: 4,
+	ignoreLocation:true,
+	keys: ['name','cardtext']
+});
+module.exports = {cards, tokens};

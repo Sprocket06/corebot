@@ -1,9 +1,17 @@
-const fuse = require('../cardSearch.js')
+const {cards, tokens} = require('../cardSearch.js')
 const Discord = require('discord.js')
 
 function search(args, msg){
   let query = args.slice(1).join(' ')
-  let search = fuse.search(query)
+  let cardSearch = cards.search(query)
+  let tokenSearch = tokens.search(query)
+  let search = cardSearch
+  if(tokenSearch){
+    tokenSearch.forEach(item=>{
+      item.item.name = item.item.name + ' (Token)'
+      search.push(item)
+    })
+  }
   if(search){
     let embed = new Discord.MessageEmbed()
       .setTitle('Card Search')

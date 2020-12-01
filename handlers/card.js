@@ -15,12 +15,19 @@ const TokenData = require('../tokendata.js')
 		CardImgData[_].tokens = []
 	}
 })/**/
-const fuse = require('../cardSearch.js')
+const {cards, tokens} = require('../cardSearch.js')
 
 function card(args, msg){
   //let name = args.slice()
   //let data = Object.values(CardImgData).find(_=>_.name.toLowerCase() == args.slice(1).join(' ').toLowerCase())
-  let search = fuse.search(args.slice(1).join(' '))[0];
+	let query = args.slice(1).join(' ');
+  let search = cards.search(query)[0];
+	let tokenSearch = tokens.search(query)[0];
+	if(search && tokenSearch){
+		if(tokenSearch.score > search.score){
+				search = tokenSearch
+		}
+	}
   //console.log(data)
   if(!search){
     msg.channel.send("Sorry, I couldn't find the card you're looking for. Maybe try a !search?")
