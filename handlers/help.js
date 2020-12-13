@@ -1,9 +1,9 @@
 function help(args, msg){
   msg.author.send(
-`Available Commands:
+`Available Commands: ( <> denotes a required argument, ? denotes a optional flag or parameter)
 !search <query>
   Returns a list of cards matching the search query.
-!card <query>
+!card <query> ?alt
   Returns information on the first card matching the provided query.
 !deck <deck code>
   Returns a list of all cards in a deck, given a valid deck code.
