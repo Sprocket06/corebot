@@ -23,7 +23,7 @@ function deckPic(deck){//this function is bad and i don't really care at this po
 	//	console.log(JSON.stringify(card))
 		let data = CardImgData[card.card_id]
 		let filePath = `./All Cards/${data.leader}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
-		if(data.art_ver > 2){
+		if(card.art_ver > 2){
 			filePath = `./All Cards/${data.leader}/alt_1/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
 		}
 		PureImage.decodePNGFromStream(fs.createReadStream(filePath)).then(img=>{
