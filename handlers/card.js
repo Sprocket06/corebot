@@ -47,7 +47,7 @@ function card(args, msg){
 		}
     let embed = new Discord.MessageEmbed()
       .setTitle(`${data.name} (${data.rating})`)
-      .setDescription(`${formatLeadText(data.leader)} ${data.creature?`**${data.power}/${data.hp}**`:`**Spell**`}\n${data.cardtext?`*${data.cardtext}*`:''}${data.tokens?`${data.tokens.map(_=>`\n${_.name}: ${_.power}/${_.hp} ${_.cardtext?`*${_.cardtext}*`:''}`)}`:''}${(altCheck&&!showAlt)?'This card has alt art. View it by adding \'alt\' to the end of the command.':''}`)
+      .setDescription(`${formatLeadText(data.leader)} ${data.creature?`**${data.power}/${data.hp}**`:`**Spell**`}\n${data.cardtext?`*${data.cardtext}*`:''}${data.tokens?`${data.tokens.map(_=>`\n${_.name}: ${_.power}/${_.hp} ${_.cardtext?`*${_.cardtext}*`:''}`)}`:''}${(altCheck&&!showAlt)?'\nThis card has alt art. View it by adding \'alt\' to the end of the command.':''}`)
       .attachFiles([filePath])
       .setImage(`attachment://FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`);
     msg.channel.send(embed)
