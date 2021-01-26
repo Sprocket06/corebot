@@ -16,11 +16,11 @@ client.on('ready', _=>{
 client.on('message', msg => {
 	if(msg.content.startsWith('!')){
 		let args = msg.content.split(' ');
-		if(Handlers[args[0].slice(1)]){
+		if(Handlers[args[0].slice(1).toLowerCase()]){
 			console.log(`Handling ${args.join(' ')}`)
 			LogChannel.send(`Handling ${args.join(' ')}`)
 			try{
-				Handlers[args[0].slice(1)](args, msg);
+				Handlers[args[0].slice(1).toLowerCase()](args, msg);
 			}catch(e){
 				console.log(e)
 				LogChannel.send(`<@${config.admin}>\n${e.stack}`);
