@@ -65,6 +65,10 @@ function deckPic(deck){//this function is bad and i don't really care at this po
 }
 
 function picCmd(args, msg){
+	if(!args[1]){
+		msg.reply("Usage: !image <deck code>")
+		return
+	}
   let deckData = importCode(args[1]);
   let deck = deckData.deck;
   if(!deck){
