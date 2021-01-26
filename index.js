@@ -20,7 +20,7 @@ client.on('message', msg => {
 				Handlers[args[0].slice(1)](args, msg);
 			}catch(e){
 				console.log(e)
-				client.users.cache.get(config.admin).send(e)
+				client.users.fetch(config.admin).send(e)
 				msg.channel.send('There was an error in processing your command.')
 			}
 		}else if(args[0] == '!reloadshit'){
