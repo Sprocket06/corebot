@@ -10,7 +10,7 @@ client.login(config.token)
 
 client.on('ready', _=>{
 	console.log('discord link online')
-	LogChannel = client.channels.fetch(config.LogChannel)
+	LogChannel = client.channels.fetch(config.log_channel)
 });
 
 client.on('message', msg => {
