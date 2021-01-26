@@ -10,7 +10,7 @@ client.login(config.token)
 
 client.on('ready', _=>{
 	console.log('discord link online')
-	LogChannel = client.channels.fetch(config.log_channel)
+	client.channels.fetch(config.log_channel).then(c=>LogChannel=c)
 });
 
 client.on('message', msg => {
@@ -23,7 +23,7 @@ client.on('message', msg => {
 				Handlers[args[0].slice(1)](args, msg);
 			}catch(e){
 				console.log(e)
-				LogChannel.send(e.stack);
+				LogChannel.send(`<@${config.admin}>\n${e.stack}`);
 				msg.channel.send('There was an error in processing your command.')
 			}
 		}else if(args[0] == '!reloadshit'){
