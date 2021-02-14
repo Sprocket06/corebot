@@ -21,8 +21,8 @@ const {cards, tokens} = require('../cardSearch.js')
 function card(args, msg){
   //let name = args.slice()
   //let data = Object.values(CardImgData).find(_=>_.name.toLowerCase() == args.slice(1).join(' ').toLowerCase())
-	let showAlt = args[args.length-1] == 'alt'
-	if(showAlt)args.pop();
+	let showAlt = args.indexOf('alt') == -1 ? false : args.splice(args.indexOf('alt'))
+	//if(showAlt)args.pop();
 	let query = args.slice(1).join(' ');
   let search = cards.search(query)[0];
 	let tokenSearch = tokens.search(query)[0];
@@ -37,17 +37,26 @@ function card(args, msg){
   }else{
     let data = search.item;
 		let filePath = `./All Cards/${data.leader}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
-		let altCheck = fs.existsSync(`./All Cards/${data.leader}/alt_1/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`)
+		//let altCheck = fs.existsSync(`./All Cards/${data.leader}/alt_1/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`)
+		let numAlts = data.art_vers.length - 1;
+		var altCheck = false;
+		if(numAlts > 0){
+			altCheck = true;
+		}
 		if(showAlt){
 			if(!altCheck){
 				msg.channel.send('Could not find alt art for the specified card, defaulting to the normal art. If you believe this to be an error, contact @Sprocket#0781.')
 			}else{
-				filePath = `./All Cards/${data.leader}/alt_1/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
+				let altNum = 1;
+				if(showAlt[1] && showAlt[1] != '1'){
+					if(data.art_vers.includes((parseInt(showAlt[1]) * 2) + 1)altNum = parseInt(showAlt[1]);
+				}
+				filePath = `./All Cards/${data.leader}/alt_${altNum}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
 			}
 		}
     let embed = new Discord.MessageEmbed()
       .setTitle(`${data.name} (${data.rating})`)
-      .setDescription(`${formatLeadText(data.leader)} ${data.creature?`**${data.power}/${data.hp}**`:`**Spell**`}\n${data.cardtext?`*${data.cardtext}*`:''}${data.tokens?`${data.tokens.map(_=>`\n${_.name}: ${_.power}/${_.hp} ${_.cardtext?`*${_.cardtext}*`:''}`)}`:''}${(altCheck&&!showAlt)?'\nThis card has alt art. View it by adding \'alt\' to the end of the command.':''}`)
+      .setDescription(`${formatLeadText(data.leader)} ${data.creature?`**${data.power}/${data.hp}**`:`**Spell**`}\n${data.cardtext?`*${data.cardtext}*`:''}${data.tokens?`${data.tokens.map(_=>`\n${_.name}: ${_.power}/${_.hp} ${_.cardtext?`*${_.cardtext}*`:''}`)}`:''}${(altCheck&&!showAlt)?`\nThis card has alt ${numAlts > 1 ? 'arts' : 'art'}. View ${numAlts > 1 ? 'them' : 'it'} by adding \'alt\' to the end of the command${numAlts > 1 ? ` followed by a number 1-${numAlts} indicating which alt art you would like to view.` :''}.`:''}`)
       .attachFiles([filePath])
       .setImage(`attachment://FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`);
     msg.channel.send(embed)
