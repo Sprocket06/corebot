@@ -56,7 +56,7 @@ function card(args, msg){
 		}
     let embed = new Discord.MessageEmbed()
       .setTitle(`${data.name} (${data.rating})`)
-      .setDescription(`${formatLeadText(data.leader)} ${data.creature?`**${data.power}/${data.hp}**`:`**Spell**`}\n${data.cardtext?`*${data.cardtext}*`:''}${data.tokens?`${data.tokens.map(_=>`\n${_.name}: ${_.power}/${_.hp} ${_.cardtext?`*${_.cardtext}*`:''}`)}`:''}${(altCheck&&!showAlt)?`\nThis card has alt ${numAlts > 1 ? 'arts' : 'art'}. View ${numAlts > 1 ? 'them' : 'it'} by adding \'alt\' to the end of the command${numAlts > 1 ? ` followed by a number 1-${numAlts} indicating which alt art you would like to view.` :''}.`:''}`)
+      .setDescription(`${formatLeadText(data.leader)} ${data.creature?`**${data.power}/${data.hp}**`:`**Spell**`}\n${data.cardtext?`*${data.cardtext}*`:''}${data.tokens?`${data.tokens.map(_=>`\n${_.name}: ${_.power}/${_.hp} ${_.cardtext?`*${_.cardtext}*`:''}`)}`:''}${(altCheck&&!showAlt)?`\nThis card has alt ${numAlts > 1 ? 'arts' : 'art'}. View ${numAlts > 1 ? 'them' : 'it'} by adding \'alt\' to the end of the command${numAlts > 1 ? ` followed by a number 1-${numAlts} indicating which alt art you would like to view` :''}.`:''}`)
       .attachFiles([filePath])
       .setImage(`attachment://FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`);
     msg.channel.send(embed)
