@@ -49,7 +49,7 @@ function card(args, msg){
 			}else{
 				let altNum = 1;
 				if(showAlt[1] && showAlt[1] != '1'){
-					if(data.art_vers.includes((parseInt(showAlt[1]) * 2) + 1)altNum = parseInt(showAlt[1]);
+					if(data.art_vers.includes((parseInt(showAlt[1]) * 2) + 1))altNum = parseInt(showAlt[1]);
 				}
 				filePath = `./All Cards/${data.leader}/alt_${altNum}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
 			}
