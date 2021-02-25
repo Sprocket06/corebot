@@ -11,7 +11,7 @@ client.login(config.token)
 
 client.on('ready', _=>{
 	console.log('discord link online')
-	client.channels.fetch(config.log_channel).then(c=>LogChannel=c)
+	client.channels.fetch(config.log_channel).then(c=>{LogChannel=c;CommandManager.logChannel = c})
 });
 
 client.on('message', msg => {
@@ -22,6 +22,12 @@ client.on('message', msg => {
 			msg.reply('done.')
 		}
 	}else{
-		CommandManager.handleMessage(msg);
+		try {
+			CommandManager.handleMessage(msg);
+		}catch(e){
+			console.log(e);
+			LogChannel.send(`<@${config.admin}>\n${e.stack}`);
+			msg.channel.send('There was an error in processing your command.')
+		}
 	}
 })
