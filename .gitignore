@@ -1,3 +1,4 @@
+# Exclude unneccessary files, sensitive config information, and any code/data taken and adapted from Fatal Core source.
 node_modules/
 All Cards/
 scripts/
