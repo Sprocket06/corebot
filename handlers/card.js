@@ -26,9 +26,11 @@ function card(args, msg){
 	let query = args.slice(1).join(' ');
   let search = cards.search(query)[0];
 	let tokenSearch = tokens.search(query)[0];
+	search['isToken'] = false;
 	if(search && tokenSearch){
 		if(tokenSearch.score > search.score){
 				search = tokenSearch
+				search.isToken = true;
 		}
 	}
   //console.log(data)
@@ -38,7 +40,7 @@ function card(args, msg){
     let data = search.item;
 		let filePath = `./All Cards/${data.leader}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
 		//let altCheck = fs.existsSync(`./All Cards/${data.leader}/alt_1/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`)
-		let numAlts = data.art_vers.length - 1;
+		let numAlts = search.isToken ? 0 : data.art_vers.length - 1;
 		var altCheck = false;
 		if(numAlts > 0){
 			altCheck = true;
