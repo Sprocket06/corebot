@@ -24,7 +24,7 @@ function deckPic(deck){//this function is bad and i don't really care at this po
 		let data = CardImgData[card.card_id]
 		let filePath = `./All Cards/${data.leader}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
 		if(card.art_ver > 2){
-			filePath = `./All Cards/${data.leader}/alt_${(card.art_ver-1)/2}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
+			filePath = `./All Cards/${data.leader}/alt_${Math.floor((card.art_ver-1)/2)}/FC_${data.leader}_${data.id.toString().padStart(3,'0')}.png`
 		}
 		PureImage.decodePNGFromStream(fs.createReadStream(filePath)).then(img=>{
 			var c = cards[i]
