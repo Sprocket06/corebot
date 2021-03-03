@@ -7,11 +7,18 @@ var Handlers = requireDir('./handlers', { noCache:true })
 var CommandManager = require('./commandManager.js');
 var LogChannel
 
+global.log = function(msg){
+	console.log(msg)
+	if(LogChannel){
+		LogChannel.send(msg)
+	}
+}
+
 client.login(config.token)
 
 client.on('ready', _=>{
 	console.log('discord link online')
-	client.channels.fetch(config.log_channel).then(c=>{LogChannel=c;CommandManager.logChannel = c})
+	client.channels.fetch(config.log_channel).then(c=>{LogChannel=c;})
 });
 
 client.on('message', msg => {

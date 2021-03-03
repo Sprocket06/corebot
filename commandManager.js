@@ -4,15 +4,12 @@ class CommandManager {
     this.logChannel
   }
   handleMessage(msg){
-    let args = msg.content.split(' ')
+    let args = msg.content.replace(/\s{2,}/g," ").split(' ')
       , cmd = args[0];
     if(this.handlers[cmd]){
       this.handlers[cmd](args,msg);
-      let log = `user: ${msg.author} cmd: ${msg.content}`
-      console.log(log)
-      if(this.logChannel){
-        logChannel.send(log)
-      }
+      let l = `user: ${msg.author.username} (id: ${msg.author.id}) cmd: ${msg.content}`
+      global.log(l)
     }
   }
   addHandler(name,fn){
