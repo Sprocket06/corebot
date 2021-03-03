@@ -1,5 +1,6 @@
 const {cards, tokens} = require('../cardSearch.js')
 const Discord = require('discord.js')
+const CommandManager = require('../commandManager.js')
 
 function search(args, msg){
   let query = args.slice(1).join(' ')
@@ -22,4 +23,4 @@ function search(args, msg){
   }
 }
 
-module.exports = search;
+CommandManager.addHandler('!search',search);

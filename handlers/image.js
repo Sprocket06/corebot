@@ -2,6 +2,7 @@ const CardImgData = require('../cardImgData.js')
 const PureImage = require('pureimage')
 const Stream = require('stream')
 const Discord = require('discord.js')
+const CommandManager = require('../commandManager.js')
 const fs = require('fs')
 const {importCode, sortDeck} = require('../stolenUtils.js')
 
@@ -81,4 +82,4 @@ function picCmd(args, msg){
   }
 }
 
-module.exports = picCmd;
+CommandManager.addHandler('!image',picCmd);

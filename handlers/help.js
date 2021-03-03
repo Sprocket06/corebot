@@ -1,3 +1,5 @@
+var CommandManager = require('../commandManager.js')
+
 function help(args, msg){
   msg.author.send(
 `Available Commands: ( <> denotes a required argument, ? denotes a optional flag or parameter)
@@ -13,4 +15,4 @@ function help(args, msg){
   )
 }
 
-module.exports = help;
+CommandManager.addHandler('!help', help);

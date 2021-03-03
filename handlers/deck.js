@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const CardImgData = require('../cardImgData.js')
+const CommandManager = require('../commandManager.js')
 const leadColors = {
 	"Prisoner": 0x9e42f5,
 	"Jedo": 0x425df5,
@@ -26,5 +27,4 @@ function deck(args, msg){
 	}
 }
 
-
-module.exports = deck
+CommandManager.addHandler('!deck',deck);

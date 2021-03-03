@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const CardImgData = require('../cardImgData.js')
 const TokenData = require('../tokendata.js')
 const fs = require('fs')
+const CommandManager = require('../commandManager.js')
 /**/Object.keys(CardImgData).forEach(_=>{
 	if(CardImgData[_].token_ids){
 		CardImgData[_].tokens = []
@@ -75,4 +76,4 @@ function formatLeadText(leader){
 	return leadtext
 }
 
-module.exports = card
+CommandManager.addHandler('!card', card);
