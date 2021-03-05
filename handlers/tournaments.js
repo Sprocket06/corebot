@@ -2,6 +2,7 @@ const CommandManager = require('../commandManager.js')
 const Discord = require('discord.js')
 const Duel = require('duel')
 const {importCode} = require('../stolenUtils.js')
+const config = require('../config.json')
 var forms = []
 var registeringCache = {}
 
@@ -22,11 +23,16 @@ class RegistrationForm {
   //bo5 - b4 b1
 }
 
+CommandManager.addHandler('!newTournament', (args,msg)=>{
+  msg.reply('not implemented :)')
+},true)
+
 CommandManager.addHandler('!register', (args, msg)=>{
   //!register <tournamentName> <ingame-name>
   let t = forms.find(_=>_.name == args[1])
   if(!args.length==3){
     msg.reply(`Usage: !register <tournament name> <your ingame name>`)
+    return
   }
   if(!t){
     msg.reply(`Could not find tournament ${args[1]}`)
