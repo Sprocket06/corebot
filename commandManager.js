@@ -10,7 +10,8 @@ class CommandManager {
     let args = msg.content.replace(/\s{2,}/g," ").split(' ')
       , cmd = args[0];
     if(this.handlers[cmd]){
-      let l = `user: ${msg.author.username} (id: ${msg.author.id}) cmd: ${msg.content}`
+      let l = `user: ${msg.author.username} (id: ${msg.author.id}) cmd: ${msg.content}
+args (${args.length}): ${args}`
       global.log(l)
       if(this.experimentalCommands.includes(cmd)){
         if(msg.guild && config.test_servers.includes(msg.guild.id)){
