@@ -11,8 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.4.1",
+    "duel": "^3.2.0",
     "fuse.js": "^6.4.3",
     "pureimage": "^0.2.5",
-    "require-dir": "^1.2.0"
+    "require-dir": "^1.2.0",
+    "roundrobin": "^1.0.3"
   }
 }
