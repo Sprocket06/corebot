@@ -6,6 +6,22 @@ const config = require('../config.json')
 var forms = []
 var registeringCache = {}
 
+function argParse(input){
+  let keys = input.match(/\w+\:/g)
+    , argObject = {}
+    , s = ''
+    , t = []
+    , i2
+  keys.forEach((key,i)=>{
+    i2 = input.indexOf(keys[i+1])
+    s = input.slice(input.indexOf(key), (i2 >= 0)?i2:undefined)
+    //ternary because keys[i+1] makes indexOf return -1 at end of seq and this is shorter than an if
+    t = s.split(':')
+    argObject[t[0]] = t[1].trim()
+  })
+  return argObject
+}
+
 class RegistrationForm {
   constructor(name, description, bestOf, bans){
     this.name = name
@@ -21,10 +37,56 @@ class RegistrationForm {
   //bo3 - b3 b1
   //bo3 - b4 b2
   //bo5 - b4 b1
+  toString(){
+    return `${this.name}
+Match Format: best of ${this.bestOf} (bring ${this.numDecks} ban: ${this.bans})
+About:
+${this.about}`
+  }
 }
 
 CommandManager.addHandler('!newTournament', (args,msg)=>{
+  //msg.reply('not implemented :)')
+  //return
+  if(!config.tournament_managers.includes(msg.author.id)){
+    return
+  }
+  //!newTournament name:weekly open 8 bestOf:3 bans:1
+  //moooore regex time yaay
+  args = argParse(msg.content)
+  if(args.name && args.bestOf && args.bans){
+    let t = new RegistrationForm(
+      args.name,
+      `Set the description with !set ${args.name} about:<insert description here>`,
+      args.bestOf,
+      args.bans
+    )
+    forms.push(t)
+    msg.reply('new tournament created!\n'+t)
+  }else{
+    msg.reply('Usage: !newTournament name<tournament name> bestOf:<usually 3 or 5> bans:<usually 1>')
+  }
+},true)
+
+CommandManager.addHandler('!set', (args,msg)=>{
   msg.reply('not implemented :)')
+  return
+},true)
+
+CommandManager.addHandler('!cancel', (args,msg)=>{
+  //!cancel <tournament name>
+  //msg.reply('not implemented :)')
+  //return
+  if(!config.tournament_managers.includes(msg.author.id)){
+    return
+  }
+  let t = forms.find(_=>_.name == args[1])
+  if(!t){
+    msg.reply(`Could not find tournament ${args[1]}`)
+  }else{
+    forms.splice(forms.indexOf(t),1)
+    msg.reply(`Tournament ${args[1]} has been pernamently deleted.`)
+  }
 },true)
 
 CommandManager.addHandler('!register', (args, msg)=>{
