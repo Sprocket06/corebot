@@ -7,7 +7,7 @@ class CommandManager {
     this.experimentalCommands = []
   }
   handleMessage(msg){
-    let args = msg.content.replace(/\s{2,}/g," ").split(' ')
+    let args = msg.content.trim().replace(/\s{2,}/g," ").split(' ')
       , cmd = args[0];
     if(this.handlers[cmd]){
       let l = `user: ${msg.author.username} (id: ${msg.author.id}) cmd: ${msg.content}

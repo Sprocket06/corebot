@@ -51,9 +51,14 @@ CommandManager.addHandler('!newTournament', (args,msg)=>{
   if(!config.tournament_managers.includes(msg.author.id)){
     return
   }
+
   //!newTournament name:weekly open 8 bestOf:3 bans:1
   //moooore regex time yaay
-  args = argParse(msg.content)
+  if(!args[1]){
+      msg.reply('Usage: !newTournament name<tournament name> bestOf:<usually 3 or 5> bans:<usually 1>')
+      return
+  }
+  args = argParse(args.slice(1).join(" "))
   if(args.name && args.bestOf && args.bans){
     let t = new RegistrationForm(
       args.name,
