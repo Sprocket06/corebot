@@ -79,18 +79,19 @@ CommandManager.addHandler('!set', (args,msg)=>{
 },true)
 
 CommandManager.addHandler('!cancel', (args,msg)=>{
-  //!cancel <tournament name>
+  //!cancel name:<tournament name>
   //msg.reply('not implemented :)')
   //return
   if(!config.tournament_managers.includes(msg.author.id)){
     return
   }
-  let t = forms.find(_=>_.name == args[1])
+  args = argParse(args.slice(1).join(" "))
+  let t = forms.find(_=>_.name == args.name)
   if(!t){
-    msg.reply(`Could not find tournament ${args[1]}`)
+    msg.reply(`Could not find tournament ${args.name}`)
   }else{
     forms.splice(forms.indexOf(t),1)
-    msg.reply(`Tournament ${args[1]} has been pernamently deleted.`)
+    msg.reply(`Tournament ${args.name} has been pernamently deleted.`)
   }
 },true)
 
