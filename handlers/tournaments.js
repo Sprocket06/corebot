@@ -73,6 +73,10 @@ CommandManager.addHandler('!newTournament', (args,msg)=>{
   }
 },true)
 
+CommandManager.addHandler('!listTournaments', (args,msg)=>{
+  forms.forEach(form=>msg.channel.send(form.toString())
+},true)
+
 CommandManager.addHandler('!set', (args,msg)=>{
   msg.reply('not implemented :)')
   return
