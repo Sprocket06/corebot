@@ -29,11 +29,13 @@ class RegistrationForm {
     this.matches = bestOf
     this.bans = bans
     this.potentials = {}
-    this.players = []
+    this.players =
+
+    get this.numDecks(){
+      return Math.floor((this.matches-1)/2) + (this.bans + 1)
+    }
   }
-  get numDecks(){
-    return Math.floor((this.matches-1)/2) + (this.bans + 1)
-  }
+
   //bo3 - b3 b1
   //bo3 - b4 b2
   //bo5 - b4 b1
