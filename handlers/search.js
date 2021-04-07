@@ -1,6 +1,8 @@
 const {cards, tokens} = require('../cardSearch.js')
+const cData = require('../cardImgData.js')
 const Discord = require('discord.js')
 const CommandManager = require('../commandManager.js')
+
 
 function search(args, msg){
   let query = args.slice(1).join(' ')
@@ -24,3 +26,7 @@ function search(args, msg){
 }
 
 CommandManager.addHandler('!search',search);
+
+CommandManager.addHandler('!altcards', (args,msg)=>{
+  msg.channel.send(`${cData.filter(_=>_.art_vers.length > 1).map(_=>_.name).join('\n')}`)
+},true)

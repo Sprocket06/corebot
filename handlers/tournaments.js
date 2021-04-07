@@ -29,11 +29,10 @@ class RegistrationForm {
     this.matches = bestOf
     this.bans = bans
     this.potentials = {}
-    this.players =
-
-    get this.numDecks(){
-      return Math.floor((this.matches-1)/2) + (this.bans + 1)
-    }
+    this.players = []
+  }
+  get numDecks(){
+    return Math.floor((this.matches-1)/2) + (this.bans + 1)
   }
 
   //bo3 - b3 b1
@@ -103,9 +102,10 @@ CommandManager.addHandler('!cancel', (args,msg)=>{
 
 CommandManager.addHandler('!register', (args, msg)=>{
   //!register <tournamentName> <ingame-name>
+  args = argParse(msg.content)
   let t = forms.find(_=>_.name == args[1])
   if(!args.length==3){
-    msg.reply(`Usage: !register <tournament name> <your ingame name>`)
+    msg.reply(`Usage: !register t:<tournament name> name:<your ingame username>`)
     return
   }
   if(!t){
