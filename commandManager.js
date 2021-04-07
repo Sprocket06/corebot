@@ -26,6 +26,8 @@ args (${args.length}): ${args}`
     this.handlers[name] = fn
     if(isTestFeature){
       this.experimentalCommands.push(name)
+    }else if(this.experimentalCommands.includes(name)){
+      this.experimentalCommands.splice(this.experimentalCommands.indexOf(name),1)
     }
   }
   removeHandler(name){
