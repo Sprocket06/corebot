@@ -28,5 +28,5 @@ function search(args, msg){
 CommandManager.addHandler('!search',search);
 
 CommandManager.addHandler('!altcards', (args,msg)=>{
-  msg.channel.send(`${cData.filter(_=>_.art_vers.length > 1).map(_=>_.name).join('\n')}`)
-},true)
+  msg.channel.send(`${Object.values(cData).filter(_=>_.art_vers.length > 1).map(_=>_.name).join('\n')}`)
+})
