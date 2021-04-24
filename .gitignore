@@ -8,3 +8,4 @@ cardImgData.js
 config.json
 *.csv
 out.png
+data/*.json
