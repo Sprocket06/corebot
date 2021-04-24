@@ -73,7 +73,7 @@ function addReward(){
 CommandManager.addHandler('!balance', (args,msg)=>{
   var acct = CogDB.accounts.find(_=>_.id == msg.author.id)
   if(!acct){
-    global.log(`No account found for ${target.username} (${target.id})
+    global.log(`No account found for ${msg.author.username} (${msg.author.id})
 Creating one`)
     acct = {
       username:target.username,
