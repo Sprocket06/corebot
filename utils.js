@@ -1,3 +1,4 @@
+//various helper functions
 const { importCode } = require('./stolenUtils.js')
 
 function compareDecks(codeA, codeB){
@@ -36,4 +37,20 @@ function compareDecks(codeA, codeB){
   return {matches, rankMatches}
 }
 
-module.exports = {compareDecks}
+function argParse(input){ //for use for commands with more complicated arguments/
+  let keys = input.match(/\w+\:/g)
+    , argObject = {}
+    , s = ''
+    , t = []
+    , i2
+  keys.forEach((key,i)=>{
+    i2 = input.indexOf(keys[i+1])
+    s = input.slice(input.indexOf(key), (i2 >= 0)?i2:undefined)
+    //ternary because keys[i+1] makes indexOf return -1 at end of seq and this is shorter than an if
+    t = s.split(':')
+    argObject[t[0]] = t[1].trim()
+  })
+  return argObject
+}
+
+module.exports = {compareDecks, argParse}
