@@ -56,7 +56,7 @@ Creating one`)
     change: amount
   }
   CogDB.records.push(log)
-  global.log(log)
+  //global.log(log)
   saveData()
   return newBal
 }
@@ -100,13 +100,13 @@ CommandManager.addHandler('!changeBal', (args, msg)=>{
     .then(_=>{
       var m = modifyBalance(msg.author, _, parseInt(args[2]))
       if(typeof m == 'string'){
-        msg.reply('Error: '+m)
+        msg.channel.send('Error: '+m)
       }else{
         msg.channel.send(`Success. ${_.username} now has ${m} cogs.`)
       }
     })
     .catch(e=>{
-      msg.reply('Error')
-      global.log(e)
+      //msg.reply('Error')
+      //global.log(e)
     })
 })

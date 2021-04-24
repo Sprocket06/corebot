@@ -10,6 +10,7 @@ var LogChannel
 global.log = function(msg){
 	console.log(msg)
 	if(LogChannel){
+		if(!msg)return
 		LogChannel.send(msg)
 	}
 }
