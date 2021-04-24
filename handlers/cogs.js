@@ -76,8 +76,8 @@ CommandManager.addHandler('!balance', (args,msg)=>{
     global.log(`No account found for ${msg.author.username} (${msg.author.id})
 Creating one`)
     acct = {
-      username:target.username,
-      id:target.id,
+      username:msg.author.username,
+      id:msg.author.id,
       balance:0
     }
     CogDB.accounts.push(acct)
