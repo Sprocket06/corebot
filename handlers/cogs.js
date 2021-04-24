@@ -20,7 +20,7 @@ try {
 function saveData(){
   global.log('Writing DB...')
   //IMPORTANT NOTE: this is a hard-coded file path, and if the organization scheme changes this will break
-  fs.writeFileSync('../data/cogs.json', JSON.stringify(CogDB))
+  fs.writeFileSync('./data/cogs.json', JSON.stringify(CogDB))
   global.log('DB write successful')
 }
 
@@ -92,17 +92,21 @@ CommandManager.addHandler('!changeBal', (args, msg)=>{
   if(!config.helpers.includes(msg.author.id)){
     return
   }
-  if(!args.length != 3){
+  if(args.length != 3){
     msg.reply('Usage: !changeBal <user id> <amount>')
+    return
   }
   msg.client.users.fetch(args[1])
     .then(_=>{
-      var m = modifyBalance(msg.author, _, ParseInt(args[2]))
+      var m = modifyBalance(msg.author, _, parseInt(args[2]))
       if(typeof m == 'string'){
         msg.reply('Error: '+m)
       }else{
         msg.channel.send(`Success. ${_.username} now has ${m} cogs.`)
       }
     })
-    .catch(e=>{throw e})
+    .catch(e=>{
+      msg.reply('Error')
+      global.log(e)
+    })
 })
