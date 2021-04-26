@@ -10,7 +10,7 @@ const CommandManager = require('../commandManager.js')
 		cards.forEach(card=>{
 			card = card.split(',')
 			let cData = TokenData[card[0]][card[1]]
-      console.log(card,cData)
+      //console.log(card,cData)
 			CardImgData[_].tokens.push(cData)
 		})
 	}else{
