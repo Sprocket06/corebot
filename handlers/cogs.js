@@ -1,4 +1,5 @@
 const CommandManager = require('../commandManager.js')
+const { argParse } = require('../utils.js')
 const config = require('../config.json')
 const fs = require('fs')
 var CogDB
@@ -10,7 +11,7 @@ try {
   CogDB = {
     records: [],
     accounts: [],
-    rewards: {}
+    rewards: []
   }
 }
 
@@ -61,13 +62,37 @@ Creating one`)
   return newBal
 }
 
-function redeem(){
-
+function leftPad(str, amount, char){
+  char = char || " "
+  return (char.repeat(amount) + str).slice(-amount)
 }
 
-function addReward(){
+CommandManager.addHandler('!cogShop',(args,msg)=>{
+  var indexPad = CogDB.rewards.length.toString().length
+    , namePad = CogDB.rewards.sort((a,b)=> a.name.length < b.name.length ? 1 : -1)[0].name.length
+  msg.channel.send(`Cog Exchange:
+${CogDB.rewards.map((r,i)=>`${leftPad(i.toString(),indexPad)} | ${r.name + (" ".repeat(namePad - r.name.length))} | ${r.cost}`)}
+Use !exchange <reward index|reward name> <details>
+(<details> will be required if you are redeeming say, a specific foil card to specify which card you want)`)
+})
 
-}
+//!exchange <reward index|reward name> 
+
+//addReward name:Random Foil cost:500
+CommandManager.addHandler('!addReward', (args,msg)=>{
+  if(!config.helpers.includes(msg.author.id))return;
+  args = argParse(msg.content)
+  if(!args.name || !args.cost){
+    msg.channel.send('Usage: !addReward name:<name> cost:<cost>')
+    return
+  }
+  if(CogDB.rewards.find(_=>_.name == args.name)){
+    msg.channel.send('There is aleady a reward with that name, did you mean to !editReward?')
+    return
+  }
+  CogDB.rewards.push({name:args.name, cost:args.cost})
+  saveData()
+})
 
 // register commands
 CommandManager.addHandler('!balance', (args,msg)=>{
@@ -106,7 +131,7 @@ CommandManager.addHandler('!changeBal', (args, msg)=>{
       }
     })
     .catch(e=>{
-      //msg.reply('Error')
-      //global.log(e)
+      msg.reply('Error')
+      global.log(e)
     })
 })
