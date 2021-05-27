@@ -6,6 +6,9 @@ const config = require('./config.json')
 var Handlers = requireDir('./handlers', { noCache:true })
 var CommandManager = require('./commandManager.js');
 var LogChannel
+var RedemptionChannel
+
+global.self = client
 
 global.log = function(msg){
 	console.log(msg)
@@ -15,11 +18,18 @@ global.log = function(msg){
 	}
 }
 
+global.sendRedemptionMsg = function(text){
+	if(RedemptionChannel){
+		return RedemptionChannel.send(text)
+	}
+}
+
 client.login(config.token)
 
 client.on('ready', _=>{
 	console.log('discord link online')
 	client.channels.fetch(config.log_channel).then(c=>{LogChannel=c;})
+	client.channels.fetch(config.redemption_channel).then(c=>{RedemptionChannel=c;c.messages.fetch().then(m=>console.log('done fetching messages: '+c.id ));})
 });
 
 client.on('message', msg => {
