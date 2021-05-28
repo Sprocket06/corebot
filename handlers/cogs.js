@@ -96,9 +96,9 @@ CommandManager.addHandler('!shop',(args,msg)=>{
   var indexPad = CogDB.rewards.length.toString().length
     , namePad = CogDB.rewards.sort((a,b)=> a.name.length < b.name.length ? 1 : -1)[0].name.length
   msg.channel.send(`\`\`\`Cog Shop\`\`\`
-${CogDB.rewards.map((r,i)=>`[${leftPad(i.toString(),indexPad,"0")}] **${r.name + (" ".repeat(namePad - r.name.length))}** || :gear: ${r.cost}`).join('\n')}
+${CogDB.rewards.map((r,i)=>`[${leftPad(i.toString(),indexPad,"0")}] **${r.name + (" ".repeat(namePad - r.name.length))}** | :gear: ${r.cost}`).join('\n')}
 
-Use \`!exchange <reward number> <details>\` to redeem!
+Use \`!redeem <reward number> <details>\` to redeem!
 *(\`<details>\` will be required if you are redeeming say, a specific foil card to specify which card you want)*`)
 })
 
@@ -107,6 +107,10 @@ Use \`!exchange <reward number> <details>\` to redeem!
 //addReward name:Random Foil cost:500
 CommandManager.addHandler('!addReward', (args,msg)=>{
   if(!config.helpers.includes(msg.author.id))return;
+  if(args.length <= 1){
+    msg.channel.send('Usage: !addReward name:<name> cost:<cost>')
+    return
+  }
   args = argParse(msg.content)
   if(!args.name || !args.cost){
     msg.channel.send('Usage: !addReward name:<name> cost:<cost>')
@@ -176,7 +180,7 @@ CommandManager.addHandler('!editCost', (args,msg)=>{
   }
   let rIndex;
   if(args.index){
-    rIndex = CogDB.rewards[args.index]
+    rIndex = CogDB.rewards[args.index] ? args.index : -1
   }else if(args.name){
     rIndex = CogDB.rewards.findIndex(_=>_.name == args.name)
   }else{
@@ -193,6 +197,34 @@ CommandManager.addHandler('!editCost', (args,msg)=>{
   saveData();
   msg.channel.send(`Price has been updated to :gear: **${args.cost}** cogs.`)
 })
+
+CommandManager.addHandler('!deleteReward', (args,msg)=>{
+  if(!config.helpers.includes(msg.author.id))return;
+  args = argParse(msg.content)
+  if(!args.name && !args.index){
+    msg.channel.send('Usage: !deleteReward index:<reward index> OR name:<reward name>')
+    return
+  }
+  let rIndex;
+  if(args.index){
+    rIndex = CogDB.rewards[args.index] ? args.index : -1
+  }else if(args.name){
+    rIndex = CogDB.rewards.findIndex(_=>_.name == args.name)
+  }else{
+    msg.channel.send('UNEXPECTED ERROR 5, PING SPROCKET')
+    return
+  }
+
+  if(rIndex == -1){
+    msg.channel.send(`Could not find the specified reward in the database. Check your input against the output of !shop and try again.`)
+    return
+  }
+
+  CogDB.rewards.splice(rIndex, 1)
+  saveData();
+  msg.channel.send(`Reward has been deleted.`)
+})
+
 
 CommandManager.addHandler('!editName', (args,msg)=>{
   if(!config.helpers.includes(msg.author.id))return;
