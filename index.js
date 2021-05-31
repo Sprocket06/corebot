@@ -65,6 +65,7 @@ client.on('message', msg => {
 		}
 	}else if(!msg.content.startsWith('!')){
 		var cMentions = parseCardMentions(msg.content)
+		cMentions = cMentions.filter(_=> !!_.trim())
 		if(cMentions.length){
 			cMentions.forEach(cName => {
 				var card = cards.search(cName)[0]
