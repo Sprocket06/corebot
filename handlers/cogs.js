@@ -95,8 +95,9 @@ setInterval(()=>{
 CommandManager.addHandler('!shop',(args,msg)=>{
   var indexPad = CogDB.rewards.length.toString().length
     , namePad = CogDB.rewards.sort((a,b)=> a.name.length < b.name.length ? 1 : -1)[0].name.length
+  CogDB.rewards.sort((a,b)=> a.cost < b.cost ? 1 : -1)
   msg.channel.send(`\`\`\`Cog Shop\`\`\`
-${CogDB.rewards.map((r,i)=>`[${leftPad(i.toString(),indexPad,"0")}] **${r.name + (" ".repeat(namePad - r.name.length))}** | :gear: ${r.cost}`).join('\n')}
+${CogDB.rewards.map((r,i)=>`[${leftPad(i.toString(),indexPad,"0")}] :gear: ${r.cost}`).join('\n')} **${r.name + (" ".repeat(namePad - r.name.length))}**
 
 Use \`!redeem <reward number> <details>\` to redeem!
 *(\`<details>\` will be required if you are redeeming say, a specific foil card to specify which card you want)*`)
