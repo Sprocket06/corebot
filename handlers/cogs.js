@@ -95,7 +95,7 @@ setInterval(()=>{
 CommandManager.addHandler('!shop',(args,msg)=>{
   var indexPad = CogDB.rewards.length.toString().length
     , namePad = CogDB.rewards.sort((a,b)=> a.name.length < b.name.length ? 1 : -1)[0].name.length
-  CogDB.rewards.sort((a,b)=> a.cost < b.cost ? 1 : -1)
+  CogDB.rewards = CogDB.rewards.sort((a,b)=> a.cost < b.cost ? -1 : 1)
   msg.channel.send(`\`\`\`Cog Shop\`\`\`
 ${CogDB.rewards.map((r,i)=>`[${leftPad(i.toString(),indexPad,"0")}] :gear: ${r.cost} **${r.name + (" ".repeat(namePad - r.name.length))}** `).join('\n')}
 
