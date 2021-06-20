@@ -117,6 +117,7 @@ CommandManager.addHandler('!addReward', (args,msg)=>{
     msg.channel.send('Usage: !addReward name:<name> cost:<cost>')
     return
   }
+  args.cost = parseInt(args.cost)//i am dumb (also how tf did this not come up in testing wtf)
   if(CogDB.rewards.find(_=>_.name == args.name)){
     msg.channel.send('There is aleady a reward with that name, did you mean to !editCost or !editName?')
     return
@@ -193,7 +194,7 @@ CommandManager.addHandler('!editCost', (args,msg)=>{
     msg.channel.send(`Could not find the specified reward in the database. Check your input against the output of !shop and try again.`)
     return
   }
-
+  args.cost = parseInt(args.cost)
   CogDB.rewards[rIndex].cost = args.cost;
   saveData();
   msg.channel.send(`Price has been updated to :gear: **${args.cost}** cogs.`)
