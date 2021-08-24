@@ -38,7 +38,7 @@ global.sendRedemptionMsg = function(text){
 //this is a bit scuffed but the current framework doesn't allow for this type of feature
 //thus, we implement it at a slightly loewr level than normal
 function parseCardMentions(input){
-	var r = /\[\[([ \w]+)\]\]/g
+	var r = /\[\[([ ,\w]+)\]\]/g
 	  , cName = r.exec(input)
 		, cNames = []
 	while(cName != null){
