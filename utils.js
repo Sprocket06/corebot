@@ -1,5 +1,6 @@
 //various helper functions
 const { importCode } = require('./stolenUtils.js')
+const cardData = require('./cardImgData.js')
 
 function compareDecks(codeA, codeB){
   var deckA = importCode(codeA)
@@ -7,8 +8,8 @@ function compareDecks(codeA, codeB){
     , ranks = ['S','A','B','C']
     , rankArr1
     , rankArr2
-    , matches = 0
-    , rankMatches = { 'S':0, 'A':0, 'B':0, 'C':0 }
+    , matches = []
+    , rankMatches = { 'S':[], 'A':[], 'B':[], 'C':[] }
     , matchIndex
   if(!deckA || !deckB)throw new Error('Invalid deck code.')
   deckA = deckA.deck
@@ -25,8 +26,8 @@ function compareDecks(codeA, codeB){
     rankArr1.forEach(card => {
       matchIndex = rankArr2.findIndex(_=>_.name == card.name)
       if(matchIndex != -1){
-        matches += 1
-        rankMatches[rank] += 1
+        matches.push(cardData[card.card_id])
+        rankMatches[rank].push(cardData[card.card_id])
         rankArr2.splice(matchIndex,1)
       }else{
         console.log(`Found difference: ${JSON.stringify(card)}`)
